@@ -8,8 +8,8 @@ import { useQuery } from "react-apollo";
 import { gql } from "apollo-boost";
 
 const GET_FAMILY_DATA = gql`
-	query family($id: Int!) {
-		family(id: $id) {
+	query allFamilies {
+		allFamilies {
 			id
 			data
 		}
@@ -17,18 +17,17 @@ const GET_FAMILY_DATA = gql`
 `;
 
 const index = () => {
-	const { loading, data, error } = useQuery(GET_FAMILY_DATA, { variables: { id: 1 } });
-
+	const { loading, data, error } = useQuery(GET_FAMILY_DATA);
 	// Ensure data was loaded
 	if (loading) return <div>Loading family data...</div>;
-	if (!data.family) console.error("Unable to find family data");
-	if (error || !data.family) {
+	if (error) {
 		console.error(error);
 		return <div>Something went wrong loading family data.</div>;
 	}
+	if (data.allFamilies.length <= 0) return <div>No families found. (You'll need to create one with the management script first)</div>;
 
-	// Row data used for the table
-	const [rowData, setrowData] = useState(data.family.data.rows);
+	// Row data used for the table (will display row data or nothing if data.rows does not exist yet)
+	const [rowData, setrowData] = useState(data.allFamilies[data.allFamilies.length - 1].data.rows || []);
 
 	// monthly payment, lump sum payment and interest rate should use this custom styling in tableColumns
 	const customStyle = (params) => {

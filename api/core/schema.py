@@ -43,7 +43,7 @@ class SampleMutation(graphene.Mutation):
 
 
 class Mutation(graphene.ObjectType):
-    sample_mutation = ModifyFamilyMutation.Field()
+    sample_mutation = SampleMutation.Field()
 
 
     
