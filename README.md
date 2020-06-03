@@ -5,6 +5,7 @@
 the IDE we use is Visual Studio Code. If you don't already have it installed you can grab it here: https://code.visualstudio.com/
 
 <br />
+
 **Windows:**
 
 **_Setting up the backend server_**
